@@ -11,7 +11,7 @@
     - **Styling:** Tailwind CSS v4
     - **UI Library:** shadcn/ui
     - **Backend (BaaS):** Firebase (Authentication, Firestore, Storage)
-    - **External APIs:** Google Favicon API, GitHub API
+    - **External APIs:** Google Favicon API
 
 ## 2. 프로젝트 구조 (Project Structure)
 현재 프로젝트는 루트 디렉토리에서 바로 Next.js가 실행되는 구조입니다.
