@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx shadcn@latest add card --yes)",
+      "Bash(curl -s https://api.github.com/users/HolicKW)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d.get\\(''''name''''\\), d.get\\(''''login''''\\), d.get\\(''''bio''''\\)\\)\")"
+    ]
+  }
+}
