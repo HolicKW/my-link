@@ -266,7 +266,10 @@ export default function Page() {
 
       {/* 헤더 부분 */}
       <header className="relative z-20 flex w-full items-center justify-between p-4">
-        <div className="flex select-none items-center gap-2.5 pl-2">
+        <div 
+          className="flex select-none items-center gap-2.5 pl-2 cursor-pointer hover:opacity-80 transition-opacity"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#5B5FC7] to-purple-600 shadow-sm ring-1 ring-white/20">
             <Plus className="h-5 w-5 text-white" strokeWidth={2.5} />
           </div>
