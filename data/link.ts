@@ -3,7 +3,9 @@ export interface Link {
   title: string;
   url: string;
   favicon?: string;
+  clicks?: number;
   createdAt: string;
+  updatedAt?: string;
 }
 
 export const DUMMY_LINKS: Link[] = [

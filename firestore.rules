@@ -1,0 +1,77 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─────────────────────────────────────────────
+    // 헬퍼 함수
+    // ─────────────────────────────────────────────
+
+    // 로그인 여부 확인
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // 요청한 사용자가 해당 문서의 소유자인지 확인
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // ─────────────────────────────────────────────
+    // users/{userId} — 사용자 프로필 문서
+    // 저장 필드: displayName, slug, bio, photoURL, email, createdAt 등
+    // ─────────────────────────────────────────────
+    match /users/{userId} {
+
+      // 읽기: 누구나 가능 (공개 프로필 페이지 지원)
+      allow read: if true;
+
+      // 생성: 로그인 + 본인만. 단, uid는 문서 ID(userId)와 일치해야 함
+      allow create: if isOwner(userId);
+
+      // 수정: 로그인 + 본인만. 단, 변경 불가 필드 보호
+      allow update: if isOwner(userId)
+        // slug 중복 방지를 위해 slug 변경은 허용하되, email은 수정 불가
+        && !("email" in request.resource.data.diff(resource.data).affectedKeys());
+
+      // 삭제: 본인만 (계정 탈퇴 지원)
+      allow delete: if isOwner(userId);
+
+      // ─────────────────────────────────────────────
+      // users/{userId}/links/{linkId} — 링크 컬렉션
+      // ─────────────────────────────────────────────
+      match /links/{linkId} {
+        // 읽기: 누구나 가능 (공개 프로필에 링크 목록 노출)
+        allow read: if true;
+
+        // 쓰기 전체(생성/수정/삭제): 로그인 + 본인만
+        allow create: if isOwner(userId)
+          // 필수 필드 존재 검증
+          && request.resource.data.keys().hasAll(["title", "url", "createdAt"]);
+
+        // 수정: 본인이거나, 오직 클릭 수(clicks)만 1 증가시키는 경우 허용
+        allow update: if isOwner(userId)
+          || (
+            request.resource.data.diff(resource.data).affectedKeys().hasOnly(['clicks'])
+            && request.resource.data.clicks == resource.data.get('clicks', 0) + 1
+          );
+
+        allow delete: if isOwner(userId);
+      }
+
+      // ─────────────────────────────────────────────
+      // users/{userId}/profile/{profileId} — 프로필 서브컬렉션
+      // useProfileQuery에서 users/{uid}/profile/main 경로를 사용 중
+      // ─────────────────────────────────────────────
+      match /profile/{profileId} {
+        // 읽기: 누구나 가능
+        allow read: if true;
+
+        // 쓰기: 로그인 + 본인만
+        allow create: if isOwner(userId);
+        allow update: if isOwner(userId);
+        allow delete: if isOwner(userId);
+      }
+    }
+  }
+}
