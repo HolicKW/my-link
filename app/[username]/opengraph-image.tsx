@@ -24,8 +24,7 @@ export default async function Image({
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#020617", // slate-950
-          backgroundImage: "radial-gradient(circle at 50% 120%, #1e1b4b 0%, #020617 80%)",
+          backgroundColor: "#0f172a", // slate-900 (조금 더 밝게 변경)
           fontFamily: "sans-serif",
         }}
       >
@@ -37,16 +36,16 @@ export default async function Image({
             alignItems: "center",
             width: "860px",
             height: "400px",
-            backgroundColor: "rgba(15, 23, 42, 0.5)", // slate-900 with opacity
-            border: "1px solid rgba(255, 255, 255, 0.08)",
+            backgroundColor: "#1e293b", // slate-800
+            border: "1px solid rgba(255, 255, 255, 0.1)",
             borderRadius: "40px",
             padding: "60px",
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.6)",
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
             position: "relative",
             overflow: "hidden",
           }}
         >
-          {/* Subtle Glows inside Card */}
+          {/* Decorative Elements inside Card */}
           <div
             style={{
               position: "absolute",
@@ -54,7 +53,8 @@ export default async function Image({
               left: "-50px",
               width: "250px",
               height: "250px",
-              background: "radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(15,23,42,0) 70%)",
+              borderRadius: "125px",
+              backgroundColor: "rgba(99,102,241,0.1)",
             }}
           />
           <div
@@ -64,7 +64,8 @@ export default async function Image({
               right: "-50px",
               width: "300px",
               height: "300px",
-              background: "radial-gradient(circle, rgba(168,85,247,0.15) 0%, rgba(15,23,42,0) 70%)",
+              borderRadius: "150px",
+              backgroundColor: "rgba(168,85,247,0.1)",
             }}
           />
 
@@ -79,7 +80,7 @@ export default async function Image({
               borderRadius: "90px",
               background: "linear-gradient(135deg, #4f46e5 0%, #9333ea 100%)", // indigo-600 to purple-600
               border: "4px solid rgba(255, 255, 255, 0.1)",
-              boxShadow: "0 10px 40px -10px rgba(147, 51, 234, 0.8)",
+              boxShadow: "0 10px 20px rgba(0, 0, 0, 0.3)",
               marginRight: "60px",
               zIndex: 10,
             }}
@@ -89,7 +90,6 @@ export default async function Image({
                 fontSize: "80px",
                 fontWeight: "bold",
                 color: "white",
-                textShadow: "0 4px 12px rgba(0,0,0,0.3)",
               }}
             >
               {initial}
@@ -113,7 +113,6 @@ export default async function Image({
                 color: "#f8fafc", // slate-50
                 margin: 0,
                 letterSpacing: "-0.03em",
-                textShadow: "0 2px 10px rgba(0,0,0,0.5)",
               }}
             >
               {displayName}

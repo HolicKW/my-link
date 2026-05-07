@@ -16,8 +16,7 @@ export default async function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#020617", // bg-slate-950
-          backgroundImage: "radial-gradient(circle at 50% 0%, #1e1b4b 0%, #020617 70%)", // Subtle top glow to mimic the hero background
+          backgroundColor: "#0f172a", // bg-slate-900 (조금 더 밝게 변경하여 입체감 부여)
         }}
       >
         {/* Hero Card Container */}
@@ -29,16 +28,16 @@ export default async function Image() {
             justifyContent: "center",
             width: "800px",
             height: "480px",
-            backgroundColor: "rgba(15, 23, 42, 0.8)", // bg-slate-900/80
-            border: "1px solid rgba(255, 255, 255, 0.05)",
-            borderRadius: "40px", // rounded-[2.5rem]
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+            backgroundColor: "#1e293b", // bg-slate-800
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            borderRadius: "40px",
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
             position: "relative",
             overflow: "hidden",
             padding: "40px",
           }}
         >
-          {/* Inner Light effects */}
+          {/* Inner Decorative Elements (Satori-safe solid colors with opacity) */}
           <div
             style={{
               position: "absolute",
@@ -46,7 +45,8 @@ export default async function Image() {
               left: "-50px",
               width: "200px",
               height: "200px",
-              background: "radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(15,23,42,0) 70%)",
+              borderRadius: "100px",
+              backgroundColor: "rgba(99,102,241,0.1)",
             }}
           />
           <div
@@ -56,7 +56,8 @@ export default async function Image() {
               right: "-50px",
               width: "200px",
               height: "200px",
-              background: "radial-gradient(circle, rgba(168,85,247,0.15) 0%, rgba(15,23,42,0) 70%)",
+              borderRadius: "100px",
+              backgroundColor: "rgba(168,85,247,0.1)",
             }}
           />
 
@@ -76,10 +77,10 @@ export default async function Image() {
                 justifyContent: "center",
                 width: "120px",
                 height: "120px",
-                borderRadius: "28px", // rounded-[1.25rem]
-                background: "linear-gradient(135deg, #5B5FC7 0%, #9333ea 100%)", // from-[#5B5FC7] to-purple-600
+                borderRadius: "28px",
+                background: "linear-gradient(135deg, #5B5FC7 0%, #9333ea 100%)",
                 border: "2px solid rgba(255, 255, 255, 0.2)",
-                boxShadow: "0 0 40px -10px rgba(91, 95, 199, 0.5)",
+                boxShadow: "0 10px 20px rgba(0, 0, 0, 0.3)",
                 marginBottom: "40px",
               }}
             >
@@ -104,11 +105,10 @@ export default async function Image() {
               style={{
                 fontSize: "56px",
                 fontWeight: "900",
-                color: "#ffffff", // Simplified gradient text effect by using white and text shadow
+                color: "#ffffff",
                 letterSpacing: "-0.05em",
                 margin: 0,
                 marginBottom: "24px",
-                textShadow: "0 2px 20px rgba(255, 255, 255, 0.3)",
               }}
             >
               MY LINK
