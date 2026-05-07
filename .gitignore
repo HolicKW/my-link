@@ -2,11 +2,6 @@
 /node_modules
 /.pnp
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
 
 # testing
 /coverage
@@ -14,8 +9,6 @@
 # next.js
 /.next/
 /out/
-
-# production
 /build
 
 # misc
@@ -28,9 +21,22 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# env files
+# local env files
 .env*.local
+.env
+
+# vercel
+.vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# eslint
+.eslintcache
+
+# AI / Editor specific
+.claude
+.gemini
+.idea/
+.vscode/
