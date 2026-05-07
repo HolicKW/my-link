@@ -1,6 +1,5 @@
 import { ImageResponse } from "next/og";
 
-
 export const alt = "사용자 프로필 - 마이링크";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -24,11 +23,11 @@ export default async function Image({
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#0f172a", // slate-900 (조금 더 밝게 변경)
+          background: "linear-gradient(180deg, #0f172a 0%, #020617 100%)",
           fontFamily: "sans-serif",
         }}
       >
-        {/* Profile Card */}
+        {/* Profile Card Container */}
         <div
           style={{
             display: "flex",
@@ -36,39 +35,14 @@ export default async function Image({
             alignItems: "center",
             width: "860px",
             height: "400px",
-            backgroundColor: "#1e293b", // slate-800
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            borderRadius: "40px",
+            background: "linear-gradient(180deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%)",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
+            borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
+            borderRadius: "48px",
             padding: "60px",
-            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
-            position: "relative",
-            overflow: "hidden",
+            boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5)",
           }}
         >
-          {/* Decorative Elements inside Card */}
-          <div
-            style={{
-              position: "absolute",
-              top: "-50px",
-              left: "-50px",
-              width: "250px",
-              height: "250px",
-              borderRadius: "125px",
-              backgroundColor: "rgba(99,102,241,0.1)",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              bottom: "-50px",
-              right: "-50px",
-              width: "300px",
-              height: "300px",
-              borderRadius: "150px",
-              backgroundColor: "rgba(168,85,247,0.1)",
-            }}
-          />
-
           {/* Left Side: Avatar */}
           <div
             style={{
@@ -78,11 +52,10 @@ export default async function Image({
               width: "180px",
               height: "180px",
               borderRadius: "90px",
-              background: "linear-gradient(135deg, #4f46e5 0%, #9333ea 100%)", // indigo-600 to purple-600
-              border: "4px solid rgba(255, 255, 255, 0.1)",
-              boxShadow: "0 10px 20px rgba(0, 0, 0, 0.3)",
+              background: "linear-gradient(135deg, #4f46e5 0%, #d946ef 100%)",
+              border: "4px solid rgba(255, 255, 255, 0.2)",
+              boxShadow: "0 15px 35px rgba(79, 70, 229, 0.4)",
               marginRight: "60px",
-              zIndex: 10,
             }}
           >
             <span
@@ -103,14 +76,13 @@ export default async function Image({
               flexDirection: "column",
               justifyContent: "center",
               flex: 1,
-              zIndex: 10,
             }}
           >
             <h1
               style={{
                 fontSize: "56px",
                 fontWeight: "900",
-                color: "#f8fafc", // slate-50
+                color: "#ffffff",
                 margin: 0,
                 letterSpacing: "-0.03em",
               }}
@@ -120,46 +92,46 @@ export default async function Image({
             <p
               style={{
                 fontSize: "28px",
-                color: "#94a3b8", // slate-400
+                color: "#94a3b8",
                 margin: "12px 0 32px 0",
                 fontWeight: "500",
                 letterSpacing: "-0.02em",
               }}
             >
-              단 하나의 프로필 링크
+              마이링크에서 프로필을 확인하세요.
             </p>
 
-            {/* Mock Link Bars to visualize it's a link-tree */}
+            {/* Mock Link Bars */}
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               <div
                 style={{
                   width: "100%",
                   height: "48px",
                   borderRadius: "24px",
-                  backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  background: "rgba(255, 255, 255, 0.05)",
                   border: "1px solid rgba(255, 255, 255, 0.1)",
                   display: "flex",
                   alignItems: "center",
                   paddingLeft: "20px",
                 }}
               >
-                <div style={{ width: "24px", height: "24px", borderRadius: "12px", backgroundColor: "rgba(255,255,255,0.2)" }} />
-                <div style={{ width: "120px", height: "12px", borderRadius: "6px", backgroundColor: "rgba(255,255,255,0.2)", marginLeft: "16px" }} />
+                <div style={{ width: "24px", height: "24px", borderRadius: "12px", background: "rgba(255,255,255,0.2)" }} />
+                <div style={{ width: "120px", height: "12px", borderRadius: "6px", background: "rgba(255,255,255,0.2)", marginLeft: "16px" }} />
               </div>
               <div
                 style={{
                   width: "85%",
                   height: "48px",
                   borderRadius: "24px",
-                  backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  background: "rgba(255, 255, 255, 0.05)",
                   border: "1px solid rgba(255, 255, 255, 0.1)",
                   display: "flex",
                   alignItems: "center",
                   paddingLeft: "20px",
                 }}
               >
-                <div style={{ width: "24px", height: "24px", borderRadius: "12px", backgroundColor: "rgba(255,255,255,0.15)" }} />
-                <div style={{ width: "90px", height: "12px", borderRadius: "6px", backgroundColor: "rgba(255,255,255,0.15)", marginLeft: "16px" }} />
+                <div style={{ width: "24px", height: "24px", borderRadius: "12px", background: "rgba(255,255,255,0.15)" }} />
+                <div style={{ width: "90px", height: "12px", borderRadius: "6px", background: "rgba(255,255,255,0.15)", marginLeft: "16px" }} />
               </div>
             </div>
           </div>
@@ -184,7 +156,7 @@ export default async function Image({
               width: "32px",
               height: "32px",
               borderRadius: "8px",
-              background: "linear-gradient(135deg, #5B5FC7 0%, #9333ea 100%)",
+              background: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
             }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
