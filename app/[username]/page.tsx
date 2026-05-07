@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
   collection,
@@ -12,6 +13,8 @@ import {
 import { db } from "@/lib/firebase";
 import { type Link } from "@/data/link";
 import ProfilePageClient from "./ProfilePageClient";
+
+const SITE_URL = "https://my-link-virid.vercel.app";
 
 interface PageProps {
   params: Promise<{ username: string }>;
@@ -68,6 +71,37 @@ async function fetchLinks(uid: string): Promise<Link[]> {
   );
   const snap = await getDocs(q);
   return snap.docs.map((d) => ({ id: d.id, ...d.data() })) as Link[];
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { username } = await params;
+  const decodedName = decodeURIComponent(username);
+  const uid = await fetchUserIdByDisplayName(decodedName);
+
+  if (!uid) {
+    return { title: "사용자를 찾을 수 없습니다" };
+  }
+
+  const profile = await fetchProfile(uid);
+  const name = profile?.displayName || decodedName;
+  const bio = profile?.bio || "마이링크에서 프로필을 확인하세요.";
+
+  return {
+    title: `${name}의 프로필`,
+    description: bio,
+    openGraph: {
+      type: "profile",
+      url: `${SITE_URL}/${username}`,
+      title: `${name} - 마이링크`,
+      description: bio,
+      siteName: "마이링크",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${name} - 마이링크`,
+      description: bio,
+    },
+  };
 }
 
 export default async function PublicProfilePage({ params }: PageProps) {
