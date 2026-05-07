@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+
 export const alt = "마이링크 - 단 하나의 프로필 링크로 나를 브랜딩하세요";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
