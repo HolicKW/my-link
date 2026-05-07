@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Plus, Loader2, Pencil, Check, ExternalLink, BarChart2 } from "lucide-react";
+import { Plus, Loader2, Pencil, Check, ExternalLink, BarChart2, Lock, Palette, Share2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { LinkCard } from "@/components/link-card";
 import { Button } from "@/components/ui/button";
@@ -201,56 +201,231 @@ export default function Page() {
 
   if (!user) {
     return (
-      <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-slate-950 p-4">
-        {/* 역동적인 배경 효과 */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+      <main className="relative flex min-h-screen flex-col overflow-x-hidden bg-slate-950 selection:bg-indigo-500/30">
+        {/* 스크롤 시 따라오는 상단 헤더 */}
+        <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-slate-950/50 backdrop-blur-md border-b border-white/5 transition-all">
+          <div 
+            className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#5B5FC7] to-purple-600 shadow-sm ring-1 ring-white/20">
+              <Plus className="h-5 w-5 text-white" strokeWidth={2.5} />
+            </div>
+            <span className="text-lg font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">
+              MY LINK
+            </span>
+          </div>
+          <Button
+            onClick={handleLogin}
+            disabled={isLoggingIn}
+            className="rounded-full bg-white text-slate-900 hover:bg-slate-200 font-bold transition-all shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)]"
+          >
+            {isLoggingIn ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+            로그인
+          </Button>
+        </header>
+
+        {/* 역동적인 배경 효과 (전체 페이지 고정) */}
+        <div className="pointer-events-none fixed inset-0 flex items-center justify-center z-0">
           <div className="absolute top-0 h-[600px] w-[600px] -translate-y-1/2 rounded-full bg-gradient-to-b from-indigo-500/20 to-purple-500/0 blur-[120px] animate-pulse" />
           <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-blue-500/10 blur-[100px]" />
           <div className="absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full bg-fuchsia-500/10 blur-[100px]" />
         </div>
 
-        <div className="relative z-10 w-full max-w-md animate-in fade-in slide-in-from-bottom-8 duration-1000">
-          <div className="relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-slate-900/20 p-10 backdrop-blur-2xl shadow-2xl">
-            {/* 카드 내부 우아한 빛 번짐 효과 */}
-            <div className="absolute inset-[1px] rounded-[calc(2.5rem-1px)] bg-slate-900/90" />
-            <div className="absolute -left-20 -top-20 h-40 w-40 rounded-full bg-indigo-500/20 blur-[50px]" />
-            <div className="absolute -bottom-20 -right-20 h-40 w-40 rounded-full bg-purple-500/20 blur-[50px]" />
+        {/* Hero Section (기존 디자인 유지) */}
+        <section className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center p-4">
+          <div className="relative w-full max-w-md animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            <div className="relative overflow-hidden rounded-[2.5rem] border border-white/5 bg-slate-900/20 p-10 backdrop-blur-2xl shadow-2xl">
+              {/* 카드 내부 우아한 빛 번짐 효과 */}
+              <div className="absolute inset-[1px] rounded-[calc(2.5rem-1px)] bg-slate-900/90" />
+              <div className="absolute -left-20 -top-20 h-40 w-40 rounded-full bg-indigo-500/20 blur-[50px]" />
+              <div className="absolute -bottom-20 -right-20 h-40 w-40 rounded-full bg-purple-500/20 blur-[50px]" />
 
-            <div className="relative flex flex-col items-center z-20">
-              {/* 로고 영역 */}
-              <div className="mb-8 flex h-20 w-20 items-center justify-center rounded-[1.25rem] bg-gradient-to-br from-[#5B5FC7] to-purple-600 shadow-[0_0_40px_-10px_rgba(91,95,199,0.5)] ring-1 ring-white/20">
-                <Plus className="h-10 w-10 text-white" strokeWidth={2.5} />
+              <div className="relative flex flex-col items-center z-20">
+                {/* 로고 영역 */}
+                <div className="mb-8 flex h-20 w-20 items-center justify-center rounded-[1.25rem] bg-gradient-to-br from-[#5B5FC7] to-purple-600 shadow-[0_0_40px_-10px_rgba(91,95,199,0.5)] ring-1 ring-white/20">
+                  <Plus className="h-10 w-10 text-white" strokeWidth={2.5} />
+                </div>
+
+                <h1 className="mb-3 text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-white/60">
+                  MY LINK
+                </h1>
+
+                <p className="mb-10 text-center text-sm font-medium leading-relaxed text-slate-400">
+                  단 하나의 프로필 링크로 나를 브랜딩하세요.<br />
+                  <span className="text-white/80">구글 계정으로 1초 만에 시작하기</span>
+                </p>
+
+                <Button
+                  onClick={handleLogin}
+                  disabled={isLoggingIn}
+                  className="group relative h-14 w-full overflow-hidden rounded-2xl bg-white text-[15px] font-semibold text-slate-900 transition-all hover:scale-[1.02] hover:bg-slate-50 focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:pointer-events-none disabled:opacity-70 shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]"
+                >
+                  {isLoggingIn ? (
+                    <Loader2 className="w-5 h-5 animate-spin text-slate-900" />
+                  ) : (
+                    <svg className="mr-2 w-5 h-5" viewBox="0 0 24 24">
+                      <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                    </svg>
+                  )}
+                  {isLoggingIn ? "로그인 중..." : "Google 계정으로 시작하기"}
+                </Button>
               </div>
-
-              <h1 className="mb-3 text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-white/60">
-                MY LINK
-              </h1>
-
-              <p className="mb-10 text-center text-sm font-medium leading-relaxed text-slate-400">
-                단 하나의 프로필 링크로 나를 브랜딩하세요.<br />
-                <span className="text-white/80">구글 계정으로 1초 만에 시작하기</span>
-              </p>
-
-              <Button
-                onClick={handleLogin}
-                disabled={isLoggingIn}
-                className="group relative h-14 w-full overflow-hidden rounded-2xl bg-white text-[15px] font-semibold text-slate-900 transition-all hover:scale-[1.02] hover:bg-slate-50 focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:pointer-events-none disabled:opacity-70 shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]"
-              >
-                {isLoggingIn ? (
-                  <Loader2 className="w-5 h-5 animate-spin text-slate-900" />
-                ) : (
-                  <svg className="mr-2 w-5 h-5" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-                  </svg>
-                )}
-                {isLoggingIn ? "로그인 중..." : "Google 계정으로 시작하기"}
-              </Button>
             </div>
           </div>
-        </div>
+          
+          {/* Scroll Down Indicator */}
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-white/30 hidden md:flex flex-col items-center gap-2">
+            <span className="text-xs font-medium tracking-wider">스크롤해서 더 알아보기</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="relative z-10 w-full max-w-5xl mx-auto px-4 py-24 flex flex-col items-center gap-16">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-white/60">
+              필요한 모든 기능을 한 곳에
+            </h2>
+            <p className="text-slate-400 max-w-lg mx-auto text-base md:text-lg">
+              마이링크는 복잡한 설정 없이도 나만의 아름다운 포트폴리오를 만들 수 있도록 돕습니다.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+            {/* Feature Card 1 */}
+            <div className="group relative overflow-hidden rounded-3xl border border-white/5 bg-slate-900/40 p-8 backdrop-blur-md transition-all duration-300 hover:bg-slate-800/50 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/20">
+              <div className="absolute -top-10 -right-10 p-3 opacity-20 transition-opacity group-hover:opacity-40">
+                <div className="h-32 w-32 rounded-full bg-indigo-500 blur-[50px]"></div>
+              </div>
+              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/20 to-indigo-500/0 ring-1 ring-white/10 group-hover:ring-indigo-500/50 transition-all">
+                <Pencil className="h-7 w-7 text-indigo-400" />
+              </div>
+              <h3 className="mb-3 text-xl font-bold text-white/90">쉽고 빠른 커스텀</h3>
+              <p className="text-sm leading-relaxed text-slate-400">
+                직관적인 UI로 프로필 이미지, 한 줄 소개, 링크를 쉽게 추가하고 즉시 반영되는 결과를 확인하세요.
+              </p>
+            </div>
+
+            {/* Feature Card 2 */}
+            <div className="group relative overflow-hidden rounded-3xl border border-white/5 bg-slate-900/40 p-8 backdrop-blur-md transition-all duration-300 hover:bg-slate-800/50 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20">
+              <div className="absolute -top-10 -right-10 p-3 opacity-20 transition-opacity group-hover:opacity-40">
+                <div className="h-32 w-32 rounded-full bg-purple-500 blur-[50px]"></div>
+              </div>
+              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500/20 to-purple-500/0 ring-1 ring-white/10 group-hover:ring-purple-500/50 transition-all">
+                <Plus className="h-7 w-7 text-purple-400" />
+              </div>
+              <h3 className="mb-3 text-xl font-bold text-white/90">무제한 링크 보드</h3>
+              <p className="text-sm leading-relaxed text-slate-400">
+                포트폴리오, 소셜 미디어, 최신 프로젝트 등 당신을 알릴 수 있는 모든 것을 제한 없이 담아보세요.
+              </p>
+            </div>
+
+            {/* Feature Card 3 */}
+            <div className="group relative overflow-hidden rounded-3xl border border-white/5 bg-slate-900/40 p-8 backdrop-blur-md transition-all duration-300 hover:bg-slate-800/50 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/20">
+              <div className="absolute -top-10 -right-10 p-3 opacity-20 transition-opacity group-hover:opacity-40">
+                <div className="h-32 w-32 rounded-full bg-blue-500 blur-[50px]"></div>
+              </div>
+              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-500/0 ring-1 ring-white/10 group-hover:ring-blue-500/50 transition-all">
+                <BarChart2 className="h-7 w-7 text-blue-400" />
+              </div>
+              <h3 className="mb-3 text-xl font-bold text-white/90">방문자 통계</h3>
+              <p className="text-sm leading-relaxed text-slate-400">
+                어떤 링크가 가장 인기가 많은지, 통계 대시보드를 통해 방문자들의 반응을 직관적으로 분석하세요.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Timeline Section (30초면 충분합니다) */}
+        <section className="relative z-10 w-full py-32 flex flex-col items-center px-4 overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
+            <div className="h-[200px] w-[600px] rounded-[100%] bg-gradient-to-r from-indigo-500/10 to-purple-500/10 blur-[80px]"></div>
+          </div>
+
+          <div className="text-center space-y-4 mb-20 relative z-10">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-white/80">
+              30초면 충분합니다
+            </h2>
+          </div>
+
+          <div className="relative w-full max-w-4xl mx-auto z-10">
+            {/* Vertical Line */}
+            <div className="absolute left-[39px] md:left-1/2 top-0 bottom-0 w-[2px] md:-translate-x-1/2 bg-gradient-to-b from-indigo-500/0 via-indigo-500/50 to-purple-500/0" />
+
+            {/* Step 1 */}
+            <div className="relative flex flex-col md:flex-row md:items-center justify-between w-full mb-12 md:mb-16">
+              <div className="hidden md:block w-5/12"></div>
+              <div className="absolute left-4 md:left-1/2 top-8 md:top-1/2 -translate-y-1/2 md:-translate-x-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 border border-indigo-500/50 shadow-[0_0_20px_-5px_rgba(99,102,241,0.5)] z-10">
+                <Lock className="h-5 w-5 text-indigo-400" />
+              </div>
+              <div className="w-full md:w-5/12 pl-24 md:pl-0">
+                <div className="rounded-3xl border border-white/5 bg-slate-900/40 p-8 backdrop-blur-md transition-all hover:bg-slate-800/50 hover:-translate-y-1 shadow-xl">
+                  <h3 className="text-xl font-bold text-white mb-2">로그인</h3>
+                  <p className="text-slate-400 text-sm">구글 계정으로 간편하게 시작하세요.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="relative flex flex-col md:flex-row md:items-center justify-between w-full mb-12 md:mb-16">
+              <div className="w-full md:w-5/12 pl-24 md:pl-0 md:pr-0 md:text-right order-2 md:order-1">
+                <div className="rounded-3xl border border-white/5 bg-slate-900/40 p-8 backdrop-blur-md transition-all hover:bg-slate-800/50 hover:-translate-y-1 shadow-xl">
+                  <h3 className="text-xl font-bold text-white mb-2">프로필 꾸미기</h3>
+                  <p className="text-slate-400 text-sm">사진을 올리고 나만의 링크들을 추가하세요.</p>
+                </div>
+              </div>
+              <div className="absolute left-4 md:left-1/2 top-8 md:top-1/2 -translate-y-1/2 md:-translate-x-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 border border-blue-500/50 shadow-[0_0_20px_-5px_rgba(59,130,246,0.5)] z-10 order-1 md:order-2">
+                <Palette className="h-5 w-5 text-blue-400" />
+              </div>
+              <div className="hidden md:block w-5/12 order-3"></div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative flex flex-col md:flex-row md:items-center justify-between w-full">
+              <div className="hidden md:block w-5/12"></div>
+              <div className="absolute left-4 md:left-1/2 top-8 md:top-1/2 -translate-y-1/2 md:-translate-x-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 border border-purple-500/50 shadow-[0_0_20px_-5px_rgba(168,85,247,0.5)] z-10">
+                <Share2 className="h-5 w-5 text-purple-400" />
+              </div>
+              <div className="w-full md:w-5/12 pl-24 md:pl-0">
+                <div className="rounded-3xl border border-white/5 bg-slate-900/40 p-8 backdrop-blur-md transition-all hover:bg-slate-800/50 hover:-translate-y-1 shadow-xl">
+                  <h3 className="text-xl font-bold text-white mb-2">공유하기</h3>
+                  <p className="text-slate-400 text-sm">완성된 링크를 인스타그램, 이력서에 공유하세요.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-24 relative z-10">
+            <Button
+              onClick={handleLogin}
+              disabled={isLoggingIn}
+              className="group h-14 px-8 rounded-2xl bg-white text-[15px] font-bold text-slate-900 transition-all hover:scale-[1.02] hover:bg-slate-50 focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:pointer-events-none disabled:opacity-70 shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]"
+            >
+              {isLoggingIn ? (
+                <Loader2 className="w-5 h-5 animate-spin text-slate-900 mr-2" />
+              ) : (
+                <svg className="mr-2 w-5 h-5" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                </svg>
+              )}
+              {isLoggingIn ? "로그인 중..." : "Google 계정으로 시작하기"}
+            </Button>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="relative z-10 border-t border-white/5 py-8 text-center bg-slate-950/50 backdrop-blur-md">
+          <p className="text-sm text-slate-500 font-medium">
+            © {new Date().getFullYear()} My Link. All rights reserved.
+          </p>
+        </footer>
       </main>
     );
   }
